@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+
+    <changeSet id="202502271000" author="jabes">
+        <createTable tableName="apartment">
+            <column name="id" type="serial">
+                <constraints primaryKey="true" primaryKeyName="apartment_id_pk"/>
+            </column>
+            <column name="city" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="street" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="house_number" type="varchar(15)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="room_count" type="varchar(25)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="advert">
+            <column name="id" type="serial">
+                <constraints primaryKey="true" primaryKeyName="advert_id_pk"/>
+            </column>
+            <column name="price" type="numeric(12, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_active" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="apartment_id" type="integer">
+                <constraints nullable="false" foreignKeyName="apartment_id_fk"
+                             referencedTableName="apartment" referencedColumnNames="id"/>
+            </column>
+            <column name="description" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="client">
+            <column name="id" type="serial">
+                <constraints primaryKey="true" primaryKeyName="client_id_pk"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="booking">
+            <column name="id" type="serial">
+                <constraints primaryKey="true" primaryKeyName="booking_id_pk"/>
+            </column>
+            <column name="start_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="end_date" type="date">
+                <constraints nullable="false" />
+            </column>
+            <column name="client_id" type="integer">
+                <constraints nullable="false" foreignKeyName="client_id_fk"
+                             referencedTableName="client" referencedColumnNames="id"/>
+            </column>
+            <column name="advert_id" type="integer">
+                <constraints nullable="false" foreignKeyName="advert_id_fk"
+                             referencedTableName="advert" referencedColumnNames="id"/>
+            </column>
+            <column name="total_price" type="numeric(12,2)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <!-- Добавляем в booking constraint для проверки, что даты разные -->
+        <sql>
+            alter table booking
+            add constraint check_dates
+            check(end_date > start_date);
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
