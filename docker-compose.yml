@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  app:
+    image: jabes/flat-rent-app:latest
+    container_name: flat_rent_app
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/flat_rent
+      DB_USERNAME: jabes
+      DB_PASSWORD: 4815
+    networks:
+      - flat_rent_net
+
+networks:
+  flat_rent_net:
+    external: true
+
+

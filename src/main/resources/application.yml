@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://91.108.189.41:5432/flat_rent
-    username: jabes
-    password: 4815
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: none
