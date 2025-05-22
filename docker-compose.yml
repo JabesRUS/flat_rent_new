@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   app:
-    image: jabes/flat-rent-app:latest
+    image: jabesrus/flat-rent-app:latest
     container_name: flat_rent_app
     restart: always
     ports:

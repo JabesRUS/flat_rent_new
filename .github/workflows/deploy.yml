@@ -22,7 +22,7 @@ jobs:
         run: ./gradlew bootJar
 
       - name: Build Docker image
-        run: docker build -t jabes/flat-rent-app:latest .
+        run: docker build -t jabesrus/flat-rent-app:latest .
 
       - name: Login to DockerHub
         uses: docker/login-action@v3
@@ -31,7 +31,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Push Docker image
-        run: docker push jabes/flat-rent-app:latest
+        run: docker push jabesrus/flat-rent-app:latest
 
       - name: SSH Deploy to server
         uses: appleboy/ssh-action@v1.0.0
