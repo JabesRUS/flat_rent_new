@@ -4,8 +4,10 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -23,9 +25,14 @@ public class Advert {
     @Column(name = "is_active", nullable = false)
     private Boolean isActive;
 
-    @Column(name = "apartment_id", nullable = false)
-    private String apartmentId;
+    @ManyToOne
+    @JoinColumn(name = "apartment_id", nullable = false)
+    private Apartment apartment;
 
     @Column(name = "description", nullable = false)
     private String description;
+
+    @OneToMany(mappedBy = "advert", fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private List<Booking> bookingList;
 }

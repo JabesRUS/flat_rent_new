@@ -24,11 +24,13 @@ public class Booking {
     @Column(name= "end_date", nullable = false)
     private LocalDate endDate;
 
-    @Column(name = "client_id", nullable = false)
-    private String clientId;
+    @ManyToOne
+    @JoinColumn(name = "client_id", nullable = false)
+    private Client client;
 
-    @Column(name = "advert_id", nullable = false)
-    private String advertId;
+    @ManyToOne
+    @JoinColumn(name = "advert_id", nullable = false)
+    private Advert advert;
 
     @Column(name = "total_price", nullable = false)
     private BigDecimal totalPrice;

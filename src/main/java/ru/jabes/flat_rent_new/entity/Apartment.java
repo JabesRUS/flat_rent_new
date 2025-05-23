@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -26,4 +29,8 @@ public class Apartment {
     @Column(name = "room_count", nullable = false)
     @Enumerated(value = EnumType.STRING)
     private ApartmentType roomCount;
+
+    @OneToMany(mappedBy = "apartment", fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private List<Advert> advertList;
 }
