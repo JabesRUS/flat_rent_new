@@ -1,14 +1,15 @@
-# Используем Java 17
-FROM eclipse-temurin:17-jdk-alpine
+# 🔧 Этап 1: Сборка проекта
+FROM gradle:8.5-jdk17 AS builder
+WORKDIR /app
+COPY . .
+RUN ./gradlew clean bootJar
 
-# Папка внутри контейнера
+# 🚀 Этап 2: Финальный образ
+FROM eclipse-temurin:17-jdk-alpine
 WORKDIR /app
 
-# Копируем собранный jar-файл внутрь контейнера
-COPY build/libs/flat_rent_new-*.jar app.jar
+# Копируем готовый jar из первого этапа
+COPY --from=builder /app/build/libs/*.jar app.jar
 
-# Порт, на котором работает Spring Boot
 EXPOSE 8080
-
-# Команда запуска
 ENTRYPOINT ["java", "-jar", "app.jar"]
