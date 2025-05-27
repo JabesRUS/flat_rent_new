@@ -12,8 +12,8 @@ public class BookingDtoRq {
     private Integer id;
 
     @NonNull
-    @JsonProperty(value = "client_id")
-    private Integer clientId;
+    @JsonProperty(value = "client")
+    private ClientDto client;
 
     @NonNull
     @JsonProperty(value = "advert_id")
@@ -24,6 +24,6 @@ public class BookingDtoRq {
     private LocalDate startDate;
 
     @NonNull
-    @JsonProperty(value = "end_вate")
+    @JsonProperty(value = "date_finish")
     private LocalDate endDate;
 }
