@@ -15,6 +15,8 @@ import ru.jabes.flat_rent_new.exception.ClientNotFoundException;
 import ru.jabes.flat_rent_new.repository.AdvertRepository;
 import ru.jabes.flat_rent_new.repository.ClientRepository;
 
+import java.math.BigDecimal;
+
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public abstract class BookingMapper {
 
@@ -24,9 +26,10 @@ public abstract class BookingMapper {
     private AdvertRepository advertRepository;
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "client", source = "clientId", qualifiedByName = "getClientById")
-    @Mapping(target = "advert", source = "advertId", qualifiedByName = "getAdvertById")
-    public abstract Booking toEntity(BookingDtoRq dtoRq);
+    @Mapping(target = "client", source = "dtoRq.clientId", qualifiedByName = "getClientById")
+    @Mapping(target = "advert", source = "dtoRq.advertId", qualifiedByName = "getAdvertById")
+    @Mapping(target = "totalPrice", source = "totalPrice")
+    public abstract Booking toEntity(BookingDtoRq dtoRq, BigDecimal totalPrice);
 
     @Named(value = "getAdvertById")
     protected Advert getAdvertById(Integer advertId) {
@@ -43,10 +46,5 @@ public abstract class BookingMapper {
     }
 
     public abstract BookingDtoRsp toDto(Booking entity);
-
-
-
-
-
 
 }

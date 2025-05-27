@@ -14,7 +14,7 @@ public class AdvertDtoRsp {
     @JsonProperty(value = "is_active")
     private Boolean isActive;
 
-    private ApartmentDto apartmentDto;
+    private ApartmentDto apartment;
 
     private String description;
 }

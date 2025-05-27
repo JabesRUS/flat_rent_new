@@ -12,10 +12,10 @@ public class BookingDtoRsp {
     private Integer id;
 
     @JsonProperty(value = "client")
-    private ClientDto clientDto;
+    private ClientDto client;
 
     @JsonProperty(value = "advert")
-    private AdvertDtoRsp advertDtoRsp;
+    private AdvertDtoRsp advert;
 
     @JsonProperty(value = "date_start")
     private LocalDate startDate;
