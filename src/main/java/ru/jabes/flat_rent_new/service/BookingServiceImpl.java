@@ -1,6 +1,8 @@
 package ru.jabes.flat_rent_new.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.jabes.flat_rent_new.dto.BookingDtoRq;
@@ -23,6 +25,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookingServiceImpl implements BookingService {
 
+    private static final int FIRST_PAGE = 0;
+    private static final int TWENTY_ENTRIES = 20;
     public final BookingMapper bookingMapper;
     public final BookingRepository bookingRepository;
     public final AdvertRepository advertRepository;
@@ -43,6 +47,16 @@ public class BookingServiceImpl implements BookingService {
 
         return bookingMapper.toDto(saveEntity);
 
+    }
+
+    public Page<BookingDtoRsp> findBookingByEmail(String email, Integer page, Integer size) {
+        int numberPage = page == null ? FIRST_PAGE : page;
+        int sizePage = size == null ? TWENTY_ENTRIES : size;
+
+        PageRequest pageRequest = PageRequest.of(numberPage, sizePage);
+        Page<Booking> bookingsPage = bookingRepository.findByClientEmail(email, pageRequest);
+
+        return bookingsPage.map(bookingMapper::toDto);
     }
 
     private void checkDates(BookingDtoRq bookingDtoRq) {
