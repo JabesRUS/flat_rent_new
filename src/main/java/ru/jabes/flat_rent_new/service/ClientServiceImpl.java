@@ -1,5 +1,6 @@
 package ru.jabes.flat_rent_new.service;
 
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.jabes.flat_rent_new.dto.ClientDto;
@@ -9,7 +10,7 @@ import ru.jabes.flat_rent_new.mapper.ClientMapper;
 import ru.jabes.flat_rent_new.repository.ClientRepository;
 
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class ClientServiceImpl implements ClientService {
 
     private final ClientRepository clientRepository;
@@ -21,6 +22,13 @@ public class ClientServiceImpl implements ClientService {
         Client saveEntity = clientRepository.save(entity);
 
         return clientMapper.toDto(saveEntity);
+    }
+
+    @Override
+    public Boolean deleteClientById(Integer id) {
+        clientRepository.deleteById(id);
+
+        return !clientRepository.existsById(id);
     }
 
     public ClientDto checkClient(ClientDto client) {

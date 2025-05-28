@@ -25,7 +25,7 @@ public class Client {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @ToString.Exclude
     private List<Booking> bookingList;
 
